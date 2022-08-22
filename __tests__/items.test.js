@@ -72,6 +72,7 @@ describe('items', () => {
     });
     const resp = await agent.get('/api/v1/items');
     expect(resp.status).toEqual(200);
+    console.log('corn', resp.body);
     expect(resp.body).toEqual([user1Item]);
   });
 
