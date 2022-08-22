@@ -45,7 +45,6 @@ describe('items', () => {
     const [agent, user] = await registerAndLogin();
     const newItem = { description: 'eggs', qty: 12 };
     const resp = await agent.post('/api/v1/items').send(newItem);
-    console.log(resp.body);
     expect(resp.status).toEqual(200);
     expect(resp.body).toEqual({
       id: expect.any(String),
@@ -96,7 +95,7 @@ describe('items', () => {
     expect(resp.body).toEqual({ ...item, bought: true });
   });
 
-  it.skip('UPDATE /api/v1/items/:id should 403 for invalid users', async () => {
+  it('UPDATE /api/v1/items/:id should 403 for invalid users', async () => {
     // create a user
     const [agent] = await registerAndLogin();
     // create a second user
