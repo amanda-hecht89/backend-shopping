@@ -41,11 +41,10 @@ describe('items', () => {
   afterAll(() => {
     pool.end();
   });
-  it.only('POST /api/v1/items creates a new shopping item with the current user', async () => {
+  it('POST /api/v1/items creates a new shopping item with the current user', async () => {
     const [agent, user] = await registerAndLogin();
     const newItem = { description: 'eggs', qty: 12 };
     const resp = await agent.post('/api/v1/items').send(newItem);
-    console.log(resp.body);
     expect(resp.status).toEqual(200);
     expect(resp.body).toEqual({
       id: expect.any(String),
@@ -76,12 +75,12 @@ describe('items', () => {
     expect(resp.body).toEqual([user1Item]);
   });
 
-  it.skip('GET /api/v1/items should return a 401 if not authenticated', async () => {
+  it('GET /api/v1/items should return a 401 if not authenticated', async () => {
     const resp = await request(app).get('/api/v1/items');
     expect(resp.status).toEqual(401);
   });
 
-  it.skip('UPDATE /api/v1/items/:id should update an item', async () => {
+  it('UPDATE /api/v1/items/:id should update an item', async () => {
     // create a user
     const [agent, user] = await registerAndLogin();
     const item = await Item.insert({
@@ -92,11 +91,12 @@ describe('items', () => {
     const resp = await agent
       .put(`/api/v1/items/${item.id}`)
       .send({ bought: true });
+    console.log('moon', resp.body);
     expect(resp.status).toBe(200);
     expect(resp.body).toEqual({ ...item, bought: true });
   });
 
-  it.skip('UPDATE /api/v1/items/:id should 403 for invalid users', async () => {
+  it('UPDATE /api/v1/items/:id should 403 for invalid users', async () => {
     // create a user
     const [agent] = await registerAndLogin();
     // create a second user
