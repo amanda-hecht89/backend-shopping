@@ -91,7 +91,6 @@ describe('items', () => {
     const resp = await agent
       .put(`/api/v1/items/${item.id}`)
       .send({ bought: true });
-    console.log('moon', resp.body);
     expect(resp.status).toBe(200);
     expect(resp.body).toEqual({ ...item, bought: true });
   });
@@ -112,7 +111,7 @@ describe('items', () => {
     expect(resp.status).toBe(403);
   });
 
-  it.skip('DELETE /api/v1/items/:id should delete items for valid user', async () => {
+  it('DELETE /api/v1/items/:id should delete items for valid user', async () => {
     const [agent, user] = await registerAndLogin();
     const item = await Item.insert({
       description: 'apples',
